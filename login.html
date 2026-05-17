@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HackerNet :: Đăng Nhập</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Fira Code', monospace; /* Font chữ dạng code của hacker */
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #050505; /* Nền đen sâu */
+            /* Hiệu ứng ma trận mờ phía sau */
+            background-image: linear-gradient(rgba(0, 20, 0, 0.2) 50%, rgba(0, 0, 0, 0.4) 50%), 
+                              linear-gradient(90deg, rgba(0, 30, 0, 0.1), rgba(0, 0, 0, 0.3));
+            background-size: 100% 4px, 4px 100%;
+        }
+
+        .login-container {
+            background: #0a0a0a;
+            padding: 40px;
+            border-radius: 4px; /* Vuông vức góc cạnh kiểu CLI */
+            border: 2px solid #39ff14; /* Viền xanh dạ quang */
+            /* Tạo hiệu ứng phát sáng Neon (Glow) */
+            box-shadow: 0 0 20px rgba(57, 255, 20, 0.2), inset 0 0 10px rgba(57, 255, 20, 0.1);
+            width: 100%;
+            max-width: 420px;
+            position: relative;
+        }
+
+        /* Dấu chấm tròn trang trí góc trên bên trái giống cửa sổ terminal */
+        .login-container::before {
+            content: "● ● ●";
+            position: absolute;
+            top: 12px;
+            left: 15px;
+            color: #1f5f12;
+            font-size: 10px;
+            letter-spacing: 3px;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 35px;
+            border-bottom: 1px dashed #1f5f12;
+            padding-bottom: 15px;
+        }
+
+        .login-header h2 {
+            color: #39ff14;
+            font-size: 24px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 8px rgba(57, 255, 20, 0.6);
+        }
+
+        .login-header p {
+            color: #1f5f12;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .input-group {
+            margin-bottom: 22px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #39ff14;
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 16px;
+            background: #000000;
+            border: 1px solid #1f5f12;
+            border-radius: 4px;
+            color: #39ff14;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus {
+            border-color: #39ff14;
+            box-shadow: 0 0 12px rgba(57, 255, 20, 0.5);
+        }
+
+        /* Đổi màu chữ gợi ý (Placeholder) thành xanh tối */
+        .input-group input::placeholder {
+            color: #1a420f;
+        }
+
+        .alert {
+            padding: 12px;
+            background-color: rgba(255, 0, 0, 0.1);
+            border: 1px solid #ff3333;
+            color: #ff3333;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 12px;
+            text-align: center;
+            box-shadow: 0 0 8px rgba(255, 51, 51, 0.3);
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            background: #123a0b;
+            border: 1px solid #39ff14;
+            border-radius: 4px;
+            color: #39ff14;
+            font-size: 15px;
+            font-weight: 600;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+
+        .btn-login:hover {
+            background: #39ff14;
+            color: #000000;
+            box-shadow: 0 0 20px rgba(57, 255, 20, 0.8);
+            font-weight: bold;
+        }
+
+        .btn-login:active {
+            transform: scale(0.98);
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 12px;
+            color: #1f5f12;
+        }
+
+        .signup-link a {
+            color: #39ff14;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+            text-shadow: 0 0 5px #39ff14;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <div class="login-header">
+            <h2>ĐI BẸT CÙNG MÌNH NHÉ</h2>
+            <p>cao tường đẹp trai</p>
+        </div>
+
+        {% if error %}
+            <div class="alert"> [ERROR] {{ error }}</div>
+        {% endif %}
+
+        <form action="/login" method="POST">
+            <div class="input-group">
+                <label for="username">> TÀI KHOẢN</label>
+                <input type="text" id="username" name="username" placeholder="Nhập ID hệ thống..." required autocomplete="off">
+            </div>
+
+            <div class="input-group">
+                <label for="password">> MẬT KHẨU</label>
+                <input type="password" id="password" name="password" placeholder="Nhập mật mã mã hóa..." required>
+            </div>
+
+            <button type="submit" class="btn-login">Đăng Nhập System</button>
+        </form>
+
+        <div class="signup-link">
+            Chưa được cấp quyền? <a href="/register">Yêu cầu tạo tài khoản</a>
+        </div>
+    </div>
+
+</body>
+</html>

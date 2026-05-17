@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HackerNet :: Hệ Thống Soi Kèo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Fira Code', monospace; }
+        body { background-color: #050505; color: #39ff14; min-height: 100vh; padding: 30px 15px; background-image: linear-gradient(rgba(0, 20, 0, 0.1) 50%, rgba(0, 0, 0, 0.3) 50%), linear-gradient(90deg, rgba(0, 30, 0, 0.05), rgba(0, 0, 0, 0.2)); background-size: 100% 4px, 4px 100%; }
+        .matrix-container { max-width: 1000px; margin: 0 auto; background: #0a0a0a; border: 2px solid #39ff14; border-radius: 4px; padding: 30px; box-shadow: 0 0 20px rgba(57, 255, 20, 0.2), inset 0 0 10px rgba(57, 255, 20, 0.1); position: relative; }
+        .matrix-container::before { content: "● ● ●"; position: absolute; top: 12px; left: 15px; color: #1f5f12; font-size: 10px; letter-spacing: 3px; }
+        header { text-align: center; border-bottom: 1px dashed #1f5f12; padding-bottom: 20px; margin-bottom: 25px; margin-top: 10px; }
+        header h1 { font-size: 26px; text-transform: uppercase; text-shadow: 0 0 8px rgba(57, 255, 20, 0.6); letter-spacing: 2px; }
+        header p { color: #1f5f12; font-size: 12px; margin-top: 6px; }
+        .status-box { display: flex; justify-content: space-between; background: #000000; border: 1px solid #1f5f12; padding: 12px 15px; margin-bottom: 25px; font-size: 12px; }
+        .status-online { color: #39ff14; text-shadow: 0 0 5px #39ff14; font-weight: bold; }
+        h2 { font-size: 16px; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
+        table { width: 100%; border-collapse: collapse; background: #000000; }
+        th, td { border: 1px solid #1f5f12; padding: 14px; text-align: center; font-size: 13px; }
+        th { background-color: #123a0b; color: #39ff14; text-transform: uppercase; }
+        tr:hover { background-color: rgba(57, 255, 20, 0.05); }
+        .team-name { font-weight: bold; color: #ffffff; text-shadow: 0 0 3px rgba(255, 255, 255, 0.5); }
+        .odds { color: #39ff14; }
+        .ai-pick { color: #ffff00; text-shadow: 0 0 5px rgba(255, 255, 0, 0.5); font-weight: bold; }
+        .btn-analyze { background: #000000; border: 1px solid #39ff14; color: #39ff14; padding: 6px 14px; border-radius: 4px; cursor: pointer; text-transform: uppercase; font-size: 11px; transition: all 0.3s; }
+        .btn-analyze:hover { background: #39ff14; color: #000000; font-weight: bold; box-shadow: 0 0 12px #39ff14; }
+        .footer-actions { margin-top: 30px; text-align: right; border-top: 1px dashed #1f5f12; padding-top: 20px; }
+        .btn-disconnect { display: inline-block; color: #ff3333; text-decoration: none; font-size: 13px; border: 1px solid #ff3333; padding: 8px 18px; border-radius: 4px; text-transform: uppercase; }
+        .btn-disconnect:hover { background: #ff3333; color: #000000; box-shadow: 0 0 12px #ff3333; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="matrix-container">
+        <header>
+            <h1>CAO TƯỜNG ĐẸP TRAI</h1>
+        </header> 
+        <div class="status-box">
+            <div>ACCESS_GRANTED: <span class="status-online">SECURE_CONNECTION</span></div>
+            <div>TARGET_LEAGUE: EPL_PREMIER_LEAGUE</div>
+        </div>
+        <h2>> DATA_STREAM: BẢNG TỶ LỆ KÈO TRỰC TUYẾN</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>TIME</th>
+                    <th>MATCH (TRẬN ĐẤU)</th>
+                    <th>HDP (KÈO CHÂU Á)</th>
+                    <th>OU (TÀI XỈU)</th>
+                    <th>AI_PREDICTION</th>
+                    <th>ACTION</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if danh_sach_tran %}
+                    {% for tran in danh_sach_tran %}
+                    <tr>
+                        <td>{{ tran.thoi_gian }}</td>
+                        <td>
+                            <span class="team-name">{{ tran.chu_nha.upper() }}</span>
+                            <br><span style="color:#1f5f12; font-size: 11px;">vs</span><br>
+                            <span class="team-name">{{ tran.khach.upper() }}</span>
+                        </td>
+                        <td class="odds">{{ tran.keo_asia }}<br><span style="color:#1f5f12; font-size: 11px;">Ăn 0.95</span></td>
+                        <td class="odds">{{ tran.tai_xiu }}<br><span style="color:#1f5f12; font-size: 11px;">Tài 0.90 / Xỉu 0.90</span></td>
+                        <td class="ai-pick">{{ tran.ai_du_doan }}</td>
+                        <td><button class="btn-analyze">ANALYZING</button></td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="6" style="color: #ff3333;">[ERROR] KHÔNG TÌM THẤY DỮ LIỆU</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+        <div class="footer-actions">
+            <a href="/" class="btn-disconnect">> DISCONNECT SYSTEM</a>
+        </div>
+    </div>
+</body>
+</html>

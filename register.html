@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HackerNet :: Đăng Ký</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Fira Code', monospace; }
+        body { display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #050505; background-image: linear-gradient(rgba(0, 20, 0, 0.2) 50%, rgba(0, 0, 0, 0.4) 50%), linear-gradient(90deg, rgba(0, 30, 0, 0.1), rgba(0, 0, 0, 0.3)); background-size: 100% 4px, 4px 100%; }
+        .register-container { background: #0a0a0a; padding: 40px; border-radius: 4px; border: 2px solid #39ff14; box-shadow: 0 0 20px rgba(57, 255, 20, 0.2), inset 0 0 10px rgba(57, 255, 20, 0.1); width: 100%; max-width: 420px; position: relative; }
+        .register-container::before { content: "● ● ●"; position: absolute; top: 12px; left: 15px; color: #1f5f12; font-size: 10px; letter-spacing: 3px; }
+        .register-header { text-align: center; margin-bottom: 25px; border-bottom: 1px dashed #1f5f12; padding-bottom: 15px; }
+        .register-header h2 { color: #39ff14; font-size: 24px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 8px rgba(57, 255, 20, 0.6); }
+        .register-header p { color: #1f5f12; font-size: 12px; margin-top: 5px; }
+        .input-group { margin-bottom: 18px; }
+        .input-group label { display: block; margin-bottom: 8px; color: #39ff14; font-size: 13px; text-transform: uppercase; }
+        .input-group input { width: 100%; padding: 12px 16px; background: #000000; border: 1px solid #1f5f12; border-radius: 4px; color: #39ff14; font-size: 14px; outline: none; transition: all 0.3s ease; }
+        .input-group input:focus { border-color: #39ff14; box-shadow: 0 0 12px rgba(57, 255, 20, 0.5); }
+        .input-group input::placeholder { color: #1a420f; }
+        .alert { padding: 12px; background-color: rgba(255, 0, 0, 0.1); border: 1px solid #ff3333; color: #ff3333; border-radius: 4px; margin-bottom: 15px; font-size: 12px; text-align: center; box-shadow: 0 0 8px rgba(255, 51, 51, 0.3); }
+        .alert.success { background-color: rgba(57, 255, 20, 0.1); border: 1px solid #39ff14; color: #39ff14; box-shadow: 0 0 8px rgba(57, 255, 20, 0.3); }
+        .btn-register { width: 100%; padding: 14px; background: #123a0b; border: 1px solid #39ff14; border-radius: 4px; color: #39ff14; font-size: 15px; font-weight: 600; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease; letter-spacing: 1px; }
+        .btn-register:hover { background: #39ff14; color: #000000; box-shadow: 0 0 20px rgba(57, 255, 20, 0.8); font-weight: bold; }
+        .login-link { text-align: center; margin-top: 20px; font-size: 12px; color: #1f5f12; }
+        .login-link a { color: #39ff14; text-decoration: none; font-weight: 600; }
+        .login-link a:hover { text-decoration: underline; text-shadow: 0 0 5px #39ff14; }
+    </style>
+</head>
+<body>
+
+    <div class="register-container">
+        <div class="register-header">
+            <h2>CYBERSEC :: REGISTER</h2>
+            <p>CREATE NEW ACCESS KEY...</p>
+        </div>
+
+        {% if error %}
+            <div class="alert"> [ERROR] {{ error }}</div>
+        {% endif %}
+        {% if success %}
+            <div class="alert success"> [SUCCESS] {{ success }}</div>
+        {% endif %}
+
+        <form action="/register" method="POST">
+            <div class="input-group">
+                <label for="username">> ĐĂNG KÝ USERNAME</label>
+                <input type="text" id="username" name="username" placeholder="Tạo tên định danh..." required autocomplete="off">
+            </div>
+
+            <div class="input-group">
+                <label for="password">> MẬT KHẨU</label>
+                <input type="password" id="password" name="password" placeholder="Mã hóa mật khẩu..." required>
+            </div>
+
+            <div class="input-group">
+                <label for="confirm_password">> XÁC NHẬN MẬT KHẨU</label>
+                <input type="password" id="confirm_password" name="confirm_password" placeholder="Nhập lại mật khẩu..." required>
+            </div>
+
+            <button type="submit" class="btn-register">Khởi Tạo Key</button>
+        </form>
+
+        <div class="login-link">
+            Đã có khóa truy cập? <a href="/">Quay lại LOGIN</a>
+        </div>
+    </div>
+
+</body>
+</html>
